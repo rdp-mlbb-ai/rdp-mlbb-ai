@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="RDP MLBB AI">
+  <title>RDP MLBB AI</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="lockScreen" class="lock-screen">
+    <div class="lock-card">
+      <div class="brand-mark">RDP<span>✦</span></div>
+      <p class="eyebrow">PRIVATE BATTLE COMPANION</p>
+      <h1 id="lockTitle">Buat PIN pribadi</h1>
+      <p class="muted" id="lockHelp">Buat PIN 4–8 digit untuk mengunci tampilan aplikasi ini di perangkat.</p>
+      <input id="pinInput" class="pin-input" inputmode="numeric" autocomplete="off" maxlength="8" placeholder="Masukkan PIN" aria-label="PIN">
+      <button id="pinButton" class="primary full">Lanjutkan</button>
+      <p id="pinError" class="error" role="alert"></p>
+      <p class="tiny muted">Catatan: PIN aplikasi ini adalah pengunci lokal, bukan autentikasi server.</p>
+    </div>
+  </div>
+
+  <main id="app" class="app hidden">
+    <header class="topbar">
+      <div>
+        <div class="brand">RDP MLBB <span>AI</span></div>
+        <div class="eyebrow">SMART BATTLE COMPANION</div>
+      </div>
+      <button id="lockNow" class="icon-btn" aria-label="Kunci aplikasi" title="Kunci aplikasi">⌑</button>
+    </header>
+
+    <section class="hero-banner">
+      <div class="eyebrow">YOUR PERSONAL COMMAND CENTER</div>
+      <h1>Play smarter.<br><span>Think ahead.</span></h1>
+      <p>Asisten strategi Mobile Legends untuk membantu keputusan sebelum dan selama pertandingan.</p>
+      <div class="banner-chip">● MODE PRIBADI · VERSI 0.1</div>
+    </section>
+
+    <nav class="tabs" aria-label="Navigasi utama">
+      <button class="tab active" data-tab="home">Beranda</button>
+      <button class="tab" data-tab="build">Build</button>
+      <button class="tab" data-tab="counter">Counter</button>
+      <button class="tab" data-tab="draft">Draft</button>
+      <button class="tab" data-tab="strategy">Strategi</button>
+    </nav>
+
+    <section id="panel-home" class="panel active">
+      <div class="section-heading"><div><div class="eyebrow">OVERVIEW</div><h2>Command center</h2></div></div>
+      <div class="feature-grid">
+        <button class="feature-card" data-go="build"><span class="feature-icon">⚔</span><b>AI Build</b><small>Rancang item dan emblem</small></button>
+        <button class="feature-card" data-go="counter"><span class="feature-icon">◎</span><b>Counter Hero</b><small>Evaluasi matchup</small></button>
+        <button class="feature-card" data-go="draft"><span class="feature-icon">♟</span><b>Draft Pick</b><small>Komposisi dan sinergi</small></button>
+        <button class="feature-card" data-go="strategy"><span class="feature-icon">⌖</span><b>Battle Plan</b><small>Rotasi dan objektif</small></button>
+      </div>
+      <div class="info-card">
+        <div class="card-title">Status aplikasi</div>
+        <p>Versi awal berjalan secara lokal di browser. Fitur formulir dan catatan strategi sudah dapat digunakan. Koneksi AI online dan data patch terkini belum diaktifkan.</p>
+      </div>
+      <div class="info-card">
+        <div class="card-title">Cara pakai di iPhone</div>
+        <ol><li>Buka alamat aplikasi melalui Safari.</li><li>Tekan tombol Bagikan.</li><li>Pilih <b>Tambahkan ke Layar Utama</b>.</li><li>Buka ikon RDP MLBB AI seperti aplikasi biasa.</li></ol>
+      </div>
+    </section>
+
+    <section id="panel-build" class="panel">
+      <div class="eyebrow">HERO LOADOUT PLANNER</div><h2>Build assistant</h2>
+      <p class="muted">Isi kondisi pertandingan. Hasil awal berupa checklist analisis, bukan klaim build meta real-time.</p>
+      <label>Hero<select id="buildHero"></select></label>
+      <label>Role<select id="buildRole"><option>Roamer</option><option>Jungler</option><option>Mid Lane</option><option>EXP Lane</option><option>Gold Lane</option></select></label>
+      <label>Ancaman utama lawan<select id="threat"><option value="balanced">Komposisi seimbang</option><option value="physical">Physical damage tinggi</option><option value="magic">Magic damage tinggi</option><option value="heal">Banyak healing / shield</option><option value="attack">Basic attack / attack speed tinggi</option><option value="cc">Crowd control tinggi</option></select></label>
+      <label>Catatan kondisi (opsional)<textarea id="buildNotes" placeholder="Contoh: lawan punya dua hero burst dan satu marksman..."></textarea></label>
+      <button class="primary full" id="buildAnalyze">Buat checklist build</button>
+      <div id="buildResult" class="result hidden" aria-live="polite"></div>
+    </section>
+
+    <section id="panel-counter" class="panel">
+      <div class="eyebrow">MATCHUP INTELLIGENCE</div><h2>Counter analyzer</h2>
+      <p class="muted">Bandingkan dua hero dan catat faktor matchup yang perlu diperiksa.</p>
+      <label>Hero kamu<select id="myHero"></select></label>
+      <label>Hero lawan<select id="enemyHero"></select></label>
+      <label>Situasi pertandingan<select id="matchPhase"><option>Early game</option><option>Mid game</option><option>Late game</option></select></label>
+      <button class="primary full" id="counterAnalyze">Analisis matchup</button>
+      <div id="counterResult" class="result hidden" aria-live="polite"></div>
+    </section>
+
+    <section id="panel-draft" class="panel">
+      <div class="eyebrow">TEAM COMPOSITION</div><h2>Draft assistant</h2>
+      <p class="muted">Masukkan hero tim untuk memeriksa kelengkapan komposisi secara manual.</p>
+      <div class="two-col">
+        <label>Tank / Roam<input id="dRoam" placeholder="Contoh: Tigreal"></label>
+        <label>Jungler<input id="dJungle" placeholder="Contoh: Fredrinn"></label>
+        <label>Mid Lane<input id="dMid" placeholder="Contoh: Valir"></label>
+        <label>EXP Lane<input id="dExp" placeholder="Contoh: Terizla"></label>
+        <label class="span-two">Gold Lane<input id="dGold" placeholder="Contoh: Brody"></label>
+      </div>
+      <label>Ancaman lawan<input id="draftThreat" placeholder="Contoh: assassin lincah, burst magic"></label>
+      <button class="primary full" id="draftAnalyze">Periksa komposisi</button>
+      <div id="draftResult" class="result hidden" aria-live="polite"></div>
+    </section>
+
+    <section id="panel-strategy" class="panel">
+      <div class="eyebrow">MATCH PLAN</div><h2>Battle strategy</h2>
+      <p class="muted">Buat rencana pertandingan berdasarkan prioritas tim.</p>
+      <label>Fokus permainan<select id="focus"><option value="early">Menang early game</option><option value="objective">Kontrol Turtle dan Lord</option><option value="scale">Bermain aman hingga late game</option><option value="pickoff">Mencari pick-off</option><option value="teamfight">Menang team fight</option></select></label>
+      <label>Kondisi tim<textarea id="teamCondition" placeholder="Contoh: tim unggul early, tetapi minim inisiasi..."></textarea></label>
+      <button class="primary full" id="strategyAnalyze">Susun battle plan</button>
+      <div id="strategyResult" class="result hidden" aria-live="polite"></div>
+    </section>
+
+    <footer>RDP MLBB AI <span>·</span> PERSONAL EDITION</footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
