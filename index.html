@@ -115,6 +115,17 @@
 
     <footer>RDP MLBB AI <span>·</span> PERSONAL EDITION</footer>
   </main>
-  <script src="app.js"></script>
+<script src="app.js"></script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js")
+      .then(() => console.log("RDP MLBB AI siap"))
+      .catch(error => console.error(error));
+  });
+}
+</script>
+
 </body>
 </html>
